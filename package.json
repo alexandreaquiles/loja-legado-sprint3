@@ -1,6 +1,6 @@
 {
   "name": "loja-legado",
-  "version": "2.0.0-legado",
+  "version": "2.2.0-legado",
   "description": "Loja da empresa, migrada para o Vendure em 2024 (legado)",
   "private": true,
   "scripts": {
@@ -12,7 +12,8 @@
     "start": "vendure start all",
     "test": "vitest run --config vitest.config.mts",
     "test:watch": "vitest --config vitest.config.mts",
-    "setup": "node scripts/setup.js"
+    "setup": "node scripts/setup.js",
+    "smoke:board": "node tools/board-mcp/smoke.mjs"
   },
   "dependencies": {
     "@vendure/asset-server-plugin": "3.7.3",

@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "board": {
+      "type": "stdio",
+      "command": "node",
+      "args": ["tools/board-mcp/src/index.js"]
+    }
+  }
+}
