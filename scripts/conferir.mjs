@@ -217,7 +217,7 @@ card('03', 'Skill v2: o workflow do time como arquivo', () => {
   const bruto = ler(SKILL);
   if (bruto === null) return [falha(`${SKILL} não existe`, 'git checkout main -- .claude/skills')];
   const t = semAcento(bruto);
-  const posPlanejar = t.search(/^#+ .*planejar/m);
+  const posPlanejar = t.search(/^##+ .*planejar/m); // o título "# Planejar e executar..." não conta
   const posClaim = t.search(/update_issue_state[^\n]*in_progress/);
   const marcadores = [
     [posClaim >= 0 && (posPlanejar < 0 || posClaim < posPlanejar), 'claim logo depois de escolher: update_issue_state(in_progress) antes de planejar',
