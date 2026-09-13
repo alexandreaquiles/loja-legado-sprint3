@@ -119,7 +119,7 @@ try {
   const antes = board().find((i) => i.id === 'LOJA-1').comments.length;
   await filhos('comentar', 6, '10');
   const depois = board().find((i) => i.id === 'LOJA-1').comments.length;
-  checar('lock', depois - antes === 60, '6 processos × 10 escritas concorrentes: 60 de 60 gravadas (lock + gravação atômica)', `escritas perdidas: ${depois - antes} de 60`);
+  checar('lock', depois - antes === 60, '6 processos × 10 escritas concorrentes: 60 de 60 gravadas (lock + gravação atômica)', `só ${depois - antes} de 60 escritas gravadas: as outras se perderam`);
 
   const r2 = await tool('update_issue_state', { id: 'LOJA-2', state: 'in_review' });
   const disputa = await filhos('claim', 2, 'LOJA-7');
