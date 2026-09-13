@@ -13,7 +13,9 @@
     "test": "vitest run --config vitest.config.mts",
     "test:watch": "vitest --config vitest.config.mts",
     "setup": "node scripts/setup.js",
-    "smoke:board": "node tools/board-mcp/smoke.mjs"
+    "conferir": "node scripts/conferir.mjs",
+    "smoke:board": "node tools/board-mcp/smoke.mjs",
+    "smoke:revisor": "node tools/revisor-mcp/scripts/smoke.mjs --pr=gabarito"
   },
   "dependencies": {
     "@vendure/asset-server-plugin": "3.7.3",
