@@ -129,10 +129,10 @@
     "blocked_by": ["LOJA-2"],
     "files": ["src/plugins/regiao/regras.ts", "src/plugins/regiao/frete.ts", "src/plugins/regiao/regiao.plugin.ts", "test/regiao.test.ts"],
     "spec": {
-      "context": "Depois da LOJA-2, a logística quer um ShippingCalculator frete_por_regiao com valor diferente por região, reaproveitando a normalização de siglas de regras.ts. ATENÇÃO: toca os mesmos arquivos da LOJA-2; nunca rodar em paralelo com ela.",
+      "context": "Depois da LOJA-2, a logística quer um ShippingCalculator frete_por_regiao com valor diferente por região, reaproveitando a lista de estados de src/plugins/regiao/regras.ts e o normalizarUf de src/plugins/compartilhado/uf.ts. ATENÇÃO: toca os mesmos arquivos da LOJA-2; nunca rodar em paralelo com ela.",
       "rules": [
         "R1. ShippingCalculator frete_por_regiao com argumentos sulSudeste e demais (centavos inteiros).",
-        "R2. Reutiliza a normalização de regras.ts; registrado pelo mesmo plugin regiao em shippingOptions.shippingCalculators, somando aos nativos."
+        "R2. Reutiliza listaDeEstados (regras.ts) e normalizarUf (compartilhado/uf.ts); registrado pelo mesmo plugin regiao em shippingOptions.shippingCalculators, somando aos nativos."
       ],
       "constraints": ["Manter os testes atuais de test/regiao.test.ts verdes."],
       "stack": "Vendure 3.7, TypeScript, vitest.",
