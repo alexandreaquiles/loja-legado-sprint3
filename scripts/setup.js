@@ -15,9 +15,11 @@ if (!fs.existsSync(path.join(raiz, '.env'))) {
 } else {
   passo('.env já existe');
 }
-if (!fs.existsSync(path.join(raiz, 'vendure.sqlite'))) {
-  fs.copyFileSync(path.join(raiz, 'seed', 'vendure.sqlite'), path.join(raiz, 'vendure.sqlite'));
-  passo('vendure.sqlite criado a partir de seed/vendure.sqlite (54 produtos de exemplo)');
+const banco = path.join(raiz, 'vendure.sqlite');
+const vazio = fs.existsSync(banco) && fs.statSync(banco).size < 100_000; // criado por um `npm run dev` antes do setup
+if (!fs.existsSync(banco) || vazio) {
+  fs.copyFileSync(path.join(raiz, 'seed', 'vendure.sqlite'), banco);
+  passo(`vendure.sqlite ${vazio ? 'estava vazio e foi recriado' : 'criado'} a partir de seed/vendure.sqlite (54 produtos de exemplo)`);
 } else {
   passo('vendure.sqlite já existe (apague-o e rode de novo para voltar ao seed)');
 }
