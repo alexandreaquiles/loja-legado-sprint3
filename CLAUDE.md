@@ -12,6 +12,13 @@
 - Plugins entram sozinhos: `src/plugins/registro.ts` liga cada `src/plugins/<nome>/index.ts` (export `plugin`). Não edite `src/vendure-config.ts` por issue. Pasta sem `index.ts` (ex.: `src/plugins/compartilhado/`) é código comum, não plugin.
 - Serviço do Vendure dentro de uma condition: `init(injector)` e `injector.get(OrderService)`; nos testes, um injector falso.
 
+## Workflow: do board ao merge
+
+- Trabalho vem do board: use a skill `/plan-issue` com o id (ex.: `LOJA-2`) ou "a próxima issue não bloqueada". Não implemente issue fora da skill.
+- Nunca trabalhe direto na `main`. Uma issue por worktree: `claude -w loja-2` cria `.claude/worktrees/loja-2/` na branch `worktree-loja-2`, a partir do `HEAD` local (faça commit antes de abrir).
+- Paralelo só entre issues sem arquivos em comum (campo `files`); o board recusa `in_progress` com sobreposição.
+- A skill para em `in_review` com commit. Merge, `done` e limpeza são do humano: `git merge worktree-loja-2`, `npm test`, `npx tsc --noEmit`, `node tools/board-mcp/cli.js mover LOJA-2 done`, `git worktree remove .claude/worktrees/loja-2`.
+
 ## Servidores MCP do time
 
 - `board` (`tools/board-mcp/`): o board de issues (specs, estados, bloqueios, `files`, comentários). O estado fica em `.git/board/issues.json`, fora das branches e compartilhado por todos os worktrees. `node tools/board-mcp/cli.js` mostra o board; `npm run smoke:board` testa o servidor sem LLM.

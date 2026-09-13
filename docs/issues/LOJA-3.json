@@ -1,0 +1,32 @@
+{
+  "id": "LOJA-3",
+  "spec": {
+    "context": "O cupom BEMVINDO é de boas-vindas e só pode valer para quem nunca comprou. O Vendure tem perCustomerUsageLimit, mas ele limita usos do cupom, não pedidos anteriores do cliente. Precisamos de uma condition que consulte os pedidos já feitos pelo cliente, usando o OrderService do Vendure injetado na condition (init(injector)).",
+    "rules": [
+      "R1. Criar o plugin src/plugins/primeira-compra/ (index.ts exporta `plugin`) com a condition primeira_compra, sem argumentos.",
+      "R2. Pedido sem customer (visitante) devolve false.",
+      "R3. A condition obtém o OrderService em init(injector) e chama orderService.findByCustomerId(ctx, customer.id, { take: 50 }); considera pedido anterior todo item com orderPlacedAt preenchido e id diferente do pedido atual.",
+      "R4. Com pelo menos um pedido anterior, devolve false; sem nenhum, devolve true.",
+      "R5. A decisão (dado a lista de pedidos e o id atual) fica em regras.ts, pura.",
+      "R6. code em snake_case, description em pt_BR e en; a condition SOMA às nativas."
+    ],
+    "constraints": [
+      "Não alterar src/plugins/cupons/ nem src/vendure-config.ts.",
+      "Não consultar o banco direto (TransactionalConnection) nem criar entidade; usar o OrderService.",
+      "Não instalar dependências."
+    ],
+    "stack": "Vendure 3.7, TypeScript, vitest; nos testes, injector e OrderService falsos (um objeto com findByCustomerId que devolve { items: [...] }).",
+    "acceptance": [
+      "test/primeira-compra.test.ts cobrindo R2, R4 (com e sem pedido anterior), o pedido atual ignorado (R3) e R6.",
+      "npm test verde."
+    ],
+    "verification": "npm test && npx tsc --noEmit"
+  },
+  "files": [
+    "src/plugins/primeira-compra/index.ts",
+    "src/plugins/primeira-compra/primeira-compra.plugin.ts",
+    "src/plugins/primeira-compra/promocoes.ts",
+    "src/plugins/primeira-compra/regras.ts",
+    "test/primeira-compra.test.ts"
+  ]
+}
