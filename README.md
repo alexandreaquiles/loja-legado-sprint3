@@ -6,7 +6,7 @@ Este é o repositório do projeto prático da Sprint 3. A loja (Vendure 3.7, SQL
 
 | | |
 |---|---|
-| Board do projeto (Trello) | https://trello.com/b/hYwskAe5 |
+| Board do projeto (Trello) | https://trello.com/b/bwXRuNjS |
 | Curso base na Alura | [Engenharia de software na era da IA: planejamento, automações e entrega em escala com agentes de IA](https://cursos.alura.com.br/course/ia-planejamento-automacoes-entrega-escala) (8h estimadas) |
 | Lançamento | segunda, 19/10/2026 |
 | Aula ao vivo | quinta, 29/10/2026, 9h–10h |
