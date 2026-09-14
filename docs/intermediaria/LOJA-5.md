@@ -26,7 +26,7 @@ Suponha que a PO respondeu: "o financeiro viu um cupom de 20% dar R$ 1.000 de de
 - **Verificação:** `npm test && npx tsc --noEmit`.
 - **files:** `src/plugins/cupons/regras.ts`, `src/plugins/cupons/promocoes.ts`, `src/plugins/cupons/cupons.plugin.ts`, `test/cupom.test.ts`.
 
-Gravar no board: peça ao agente um `save_issue_spec` com esses blocos (ou `node tools/board-mcp/cli.js spec LOJA-5 arquivo.json`). O `save_issue_spec` não muda o estado: a LOJA-5 continua `todo` e agora passa na Definition of Ready.
+Gravar no board: peça ao agente um `save_issue_spec` com esses blocos (ou `node tools/board-mcp/cli.js spec LOJA-5 arquivo.json`). O `save_issue_spec` não muda o estado: a LOJA-5 continua no estado em que estava (`todo` no seed; `blocked` se a skill v2 já passou por ela, como no Passo 3 da aula) e agora passa na Definition of Ready. Quem a move para `todo` é a PO.
 
 ## O que costuma faltar
 
