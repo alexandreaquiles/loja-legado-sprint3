@@ -267,7 +267,7 @@ card('04', 'Paralelo: LOJA-2 e LOJA-3 em worktrees', () => {
   else if (branchAtual() === 'gabarito' && integradas.length === 2) r.push(ok(`board: ${estados.map(([id, s]) => `${id} ${s}`).join(', ')} (o board não é versionado; no gabarito vale o código)`));
   else r.push(falha(`board: ${estados.map(([id, s]) => `${id} ${s ?? '?'}`).join(', ')}`, 'a skill move para in_review ao entregar; depois do merge: node tools/board-mcp/cli.js mover LOJA-2 done'));
   const wts = (git('worktree', 'list', '--porcelain') ?? '').split('\n').filter((l) => l.startsWith('worktree ')).length;
-  r.push(wts <= 1 ? ok('nenhum worktree sobrando') : pendente(`${wts - 1} worktree(s) ainda abertos (git worktree list)`, 'depois do merge: git worktree remove .claude/worktrees/<nome> e git branch -d worktree-<nome>'));
+  r.push(wts <= 1 ? ok('nenhum worktree sobrando') : pendente(`${wts - 1} worktree(s) ainda abertos (git worktree list)`, 'depois do merge: git worktree remove --force --force .claude/worktrees/<nome> (o claude -w deixa o worktree locked) e git branch -d worktree-<nome>'));
   return r;
 });
 
