@@ -50,7 +50,7 @@ Os servidores `board` e `revisor` já vêm aprovados em `.claude/settings.json` 
 
 `claude -w loja-2` cria o worktree em `.claude/worktrees/loja-2/`, na branch **`worktree-loja-2`** (o Claude Code sempre prefixa `worktree-`; uma `/` no nome vira `+`). Neste repositório, `.claude/settings.json` define `"worktree": { "baseRef": "head" }`: o worktree parte do seu `HEAD` local, então **faça commit** da skill e do `CLAUDE.md` antes de abrir os worktrees (o padrão do Claude Code seria partir de `origin/main`). O `.worktreeinclude` copia `.env`, `vendure.sqlite` e `tools/revisor-mcp/node_modules`; o `node_modules` da loja é encontrado na raiz (a resolução do Node sobe pastas).
 
-Integrar é trabalho humano: `git merge worktree-loja-2 worktree-loja-3` na `main`, `npm test`, `npx tsc --noEmit`, `node tools/board-mcp/cli.js mover LOJA-2 done`, e limpar com `git worktree remove .claude/worktrees/loja-2` e `git branch -d worktree-loja-2`.
+Integrar é trabalho humano: `git merge worktree-loja-2 worktree-loja-3` na `main`, `npm test`, `npx tsc --noEmit`, `node tools/board-mcp/cli.js mover LOJA-2 done`, e limpar com `git worktree remove --force --force .claude/worktrees/loja-2` e `git branch -d worktree-loja-2`. O `claude -w` deixa o worktree *locked*: `remove` e `remove --force` recusam, e o `--force` repetido remove mesmo assim (ou `git worktree unlock .claude/worktrees/loja-2` antes do `remove`).
 
 ## As tarefas
 
