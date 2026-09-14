@@ -21,14 +21,14 @@ git clone https://github.com/alexandreaquiles/loja-legado-sprint3.git
 cd loja-legado-sprint3
 npm install          # ~2 minutos e ~800 MB: o Vendure inteiro vem em node_modules
 npm run setup        # branches locais, .env (segredos falsos), vendure.sqlite, board e npm install em tools/revisor-mcp
-npm test             # 15 testes verdes, em ~1 segundo
+npm test             # 15 testes verdes, em poucos segundos
 npm run smoke:board  # sobe o MCP do board num arquivo temporário e testa claim, bloqueio, sobreposição e lock, sem LLM
 node tools/board-mcp/cli.js   # o board no terminal: 7 issues
 npm run conferir     # confere os cards 00 a 04: no começo só o 00 fica todo ✔
 claude               # abre o agente; aceite confiar na pasta
 ```
 
-Os servidores `board` e `revisor` já vêm aprovados em `.claude/settings.json` (`enabledMcpjsonServers`), mas o Claude Code só aplica essa aprovação **depois que você confia na pasta** no primeiro `claude`. Um worktree herda a confiança do checkout principal.
+Os servidores `board` e `revisor` já vêm aprovados em `.claude/settings.json` (`enabledMcpjsonServers`), mas o Claude Code só aplica essa aprovação **depois que você confia na pasta** no primeiro `claude`. Pela documentação, um worktree herda a confiança do checkout principal (não testado numa sessão interativa).
 
 ## O board
 
@@ -50,7 +50,7 @@ Os servidores `board` e `revisor` já vêm aprovados em `.claude/settings.json` 
 
 `claude -w loja-2` cria o worktree em `.claude/worktrees/loja-2/`, na branch **`worktree-loja-2`** (o Claude Code sempre prefixa `worktree-`; uma `/` no nome vira `+`). Neste repositório, `.claude/settings.json` define `"worktree": { "baseRef": "head" }`: o worktree parte do seu `HEAD` local, então **faça commit** da skill e do `CLAUDE.md` antes de abrir os worktrees (o padrão do Claude Code seria partir de `origin/main`). O `.worktreeinclude` copia `.env`, `vendure.sqlite` e `tools/revisor-mcp/node_modules`; o `node_modules` da loja é encontrado na raiz (a resolução do Node sobe pastas).
 
-Integrar é trabalho humano: `git merge worktree-loja-2 worktree-loja-3` na `main`, `npm test`, `npx tsc --noEmit`, `node tools/board-mcp/cli.js mover LOJA-2 done`, e limpar com `git worktree remove --force --force .claude/worktrees/loja-2` e `git branch -d worktree-loja-2`. O `claude -w` deixa o worktree *locked*: `remove` e `remove --force` recusam, e o `--force` repetido remove mesmo assim (ou `git worktree unlock .claude/worktrees/loja-2` antes do `remove`).
+Integrar é trabalho humano: `git merge worktree-loja-2 worktree-loja-3 -m "merge LOJA-2 e LOJA-3"` na `main` (sem `-m`, o git abre o editor), `npm test`, `npx tsc --noEmit`, `node tools/board-mcp/cli.js mover LOJA-2 done`, e limpar com `git worktree remove --force --force .claude/worktrees/loja-2` e `git branch -d worktree-loja-2`. O `claude -w` deixa o worktree *locked*: `remove` e `remove --force` recusam, e o `--force` repetido remove mesmo assim (ou `git worktree unlock .claude/worktrees/loja-2` antes do `remove`).
 
 ## As tarefas
 

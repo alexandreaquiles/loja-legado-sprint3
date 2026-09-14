@@ -158,7 +158,7 @@ card('01', 'Sentir o problema: a próxima issue sem workflow', () => {
     : 'a skill plan-issue é a v1 do curso: não move estado, não confere Definition of Ready, não roda tsc'));
   const claude = semAcento(ler('CLAUDE.md'));
   r.push(/plan-issue/.test(claude)
-    ? ok('o CLAUDE.md já manda usar /plan-issue (para repetir o card 01, abra claude --disable-slash-commands)')
+    ? ok('o CLAUDE.md já manda usar /plan-issue (para repetir o card 01, traga a v1 e o CLAUDE.md da main só para a cópia de trabalho: git checkout origin/main -- CLAUDE.md .claude/skills/plan-issue/SKILL.md; o --disable-slash-commands tira a skill, mas não o CLAUDE.md)')
     : ok('o CLAUDE.md não manda usar a skill nem proíbe a main: é o cenário do card'));
   const b = lerBoard();
   if (!b.erro) {
@@ -233,7 +233,8 @@ card('03', 'Skill v2: o workflow do time como arquivo', () => {
   ];
   for (const [passou, texto, dica] of marcadores) r.push(passou ? ok(texto) : falha(`${SKILL}: falta ${texto}`, dica));
   const claude = semAcento(ler('CLAUDE.md'));
-  r.push(/plan-issue/.test(claude) && /main/.test(claude) && /worktree/.test(claude)
+  // "worktrees" já aparece no CLAUDE.md da main (board compartilhado): o marcador é a regra de uma issue por worktree
+  r.push(/plan-issue/.test(claude) && /main/.test(claude) && /(claude -w|worktree-|por worktree)/.test(claude)
     ? ok('CLAUDE.md manda usar /plan-issue, uma issue por worktree e nunca a main')
     : falha('CLAUDE.md não diz que o trabalho vem do board pela skill, em worktree, nunca na main', 'uma regra que vale em toda sessão vai no CLAUDE.md (curso, aula «Para saber mais: quando faz sentido criar uma skill customizada»)'));
   return r;
@@ -241,18 +242,28 @@ card('03', 'Skill v2: o workflow do time como arquivo', () => {
 
 card('04', 'Paralelo: LOJA-2 e LOJA-3 em worktrees', () => {
   const r = [];
-  const naArvore = (id) => existe(...PASTA[id].split('/'), 'index.ts');
+  // A pasta do plugin sai dos files da issue no board (a spec da LOJA-3 é do aluno, card 02); PASTA é o fallback
+  // (gabarito, board do seed sem files). Um plugin só é registrado com index.ts (src/plugins/registro.ts).
+  const pastasDe = (id) => {
+    const doBoard = [...new Set((issue(id)?.files ?? [])
+      .map((f) => String(f).split('/'))
+      .filter((p) => p.length >= 4 && p[0] === 'src' && p[1] === 'plugins' && !['cupons', 'compartilhado'].includes(p[2]))
+      .map((p) => p.slice(0, 3).join('/')))];
+    return doBoard.length ? doBoard : [PASTA[id]];
+  };
+  const pastaNaArvore = (id) => pastasDe(id).find((p) => existe(...p.split('/'), 'index.ts'));
+  const naArvore = (id) => Boolean(pastaNaArvore(id));
   const outras = (git('for-each-ref', '--format=%(refname:short)', 'refs/heads/') ?? '').split('\n').filter((b) => b && !['main', 'gabarito'].includes(b));
   const branchDe = (id) => {
-    const arquivos = [...new Set([PASTA[id], ...(issue(id)?.files ?? [])])];
+    const arquivos = [...new Set([...pastasDe(id), ...(issue(id)?.files ?? [])])];
     return outras.find((b) => (git('log', '--format=%h', `main..${b}`, '--', ...arquivos) ?? '').trim());
   };
   const integradas = [];
   for (const id of ['LOJA-2', 'LOJA-3']) {
     const b = branchDe(id);
     if (b) r.push(ok(`${id}: branch ${b} com commit${naArvore(id) ? ' (já integrada aqui)' : ''}`));
-    else if (naArvore(id)) r.push(ok(`${id}: ${PASTA[id]}/ presente nesta branch${branchAtual() === 'gabarito' ? ' (gabarito: vale como a branch da issue)' : ''}`));
-    else r.push(falha(`${id}: nenhuma branch com commit em ${PASTA[id]}/`, `claude -w ${id.toLowerCase()} e /plan-issue ${id}: a branch se chama worktree-${id.toLowerCase()} (pasta .claude/worktrees/${id.toLowerCase()}/)`));
+    else if (naArvore(id)) r.push(ok(`${id}: ${pastaNaArvore(id)}/ presente nesta branch${branchAtual() === 'gabarito' ? ' (gabarito: vale como a branch da issue)' : ''}`));
+    else r.push(falha(`${id}: nenhuma branch com commit em ${pastasDe(id).join('/, ')}/`, `claude -w ${id.toLowerCase()} e /plan-issue ${id}: a branch se chama worktree-${id.toLowerCase()} (pasta .claude/worktrees/${id.toLowerCase()}/)`));
     if (naArvore(id)) integradas.push(id);
   }
   if (integradas.length === 2) {
