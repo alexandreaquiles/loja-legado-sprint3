@@ -10,7 +10,7 @@ Este é o repositório do projeto prático da Sprint 3. A loja (Vendure 3.7, SQL
 | Curso base na Alura | [Engenharia de software na era da IA: planejamento, automações e entrega em escala com agentes de IA](https://cursos.alura.com.br/course/ia-planejamento-automacoes-entrega-escala) (8h estimadas) |
 | Lançamento | segunda, 19/10/2026 |
 | Aula ao vivo | quinta, 29/10/2026, 9h–10h |
-| Entrega do Desafio | sexta, 30/10/2026, no Discord da turma |
+| Entrega do Desafio | sexta, 30/10/2026, por pull request neste repositório |
 
 ## Preparar o ambiente
 
@@ -77,7 +77,13 @@ As tarefas essenciais são as que o professor resolve ao vivo na quinta. Tente a
 
 ## Como entregar o Desafio
 
-Poste no Discord da turma até a sexta que fecha a sprint, com o template do card "Como entregar" no Trello. Quem terminar antes da aula pode mostrar ao vivo, se der tempo.
+Por pull request neste repositório, até a sexta que fecha a sprint. É a única PR que vem para cá: as branches e os merges das tarefas ficam no seu fork ou no seu clone.
+
+1. Faça um fork e, nele, crie a branch `desafio/<seu-usuario>` (já clonou daqui? `gh repo fork --remote` cria o fork e aponta o `origin` para ele).
+2. Copie [`entregas/TEMPLATE.md`](entregas/TEMPLATE.md) para `entregas/<seu-usuario>.md` e preencha.
+3. Abra a PR para o `main` daqui com o título `[Desafio S3] <seu-usuario> · N1 N2 N3` (só os níveis que fez).
+
+A PR não é mergeada e é pública: nada da sua empresa sem anonimizar. Detalhes no card "Como entregar o Desafio" do Trello. Quem terminar antes da aula pode mostrar ao vivo, se der tempo.
 
 ## Licença
 
