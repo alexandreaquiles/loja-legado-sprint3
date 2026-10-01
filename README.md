@@ -63,7 +63,7 @@ Copie o board do Trello para a sua conta e mova os cards. Resumo:
 | 02 | Spec como issue: completar a LOJA-3 (6 blocos e `files`) e movê-la para `todo` | Essencial |
 | 03 | Skill v2: evoluir a `/plan-issue` (estado, Definition of Ready, sobreposição de `files`, gate de tipos) e o `CLAUDE.md` | Essencial |
 | 04 | Paralelo: LOJA-2 e LOJA-3 em worktrees, integrar na `main` | Essencial |
-| 05 | Intermediária: reescrever a LOJA-5 (feito na aula ao vivo) | Intermediária |
+| 05 | Intermediária: reescrever a LOJA-5 (em casa; a aula ao vivo não a cobre) | Intermediária |
 | 06 | Desafio em 3 níveis, no seu backlog ou no `loja-legado` | Desafio |
 
 Cada card termina com `npm run conferir -- NN`: ✔ feito, ✘ falta, … depende de outro card. É feedback, não nota: nada ali usa LLM nem lê o seu `.env`.
@@ -83,7 +83,7 @@ Por pull request neste repositório, até a sexta que fecha a sprint. É a únic
 2. Copie [`entregas/TEMPLATE.md`](entregas/TEMPLATE.md) para `entregas/<seu-usuario>.md` e preencha.
 3. Abra a PR para o `main` daqui com o título `[Desafio S3] <seu-usuario> · N1 N2 N3` (só os níveis que fez).
 
-A PR não é mergeada e é pública: nada da sua empresa sem anonimizar. Detalhes no card "Como entregar o Desafio" do Trello. Quem terminar antes da aula pode mostrar ao vivo, se der tempo.
+A PR não é mergeada e é pública: nada da sua empresa sem anonimizar. Detalhes no card "Como entregar o Desafio" do Trello.
 
 ## Licença
 
